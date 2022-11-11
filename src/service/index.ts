@@ -2,6 +2,7 @@
 import ANRequest from './request'
 import { BASE_URL, TIME_OUT } from './request/config'
 import localCache from '@/utils/cache'
+import { AxiosRequestConfig } from 'axios'
 
 const anRequest = new ANRequest({
   baseURL: BASE_URL,
@@ -10,7 +11,7 @@ const anRequest = new ANRequest({
     'Content-Type': 'application/json'
   },
   interceptors: {
-    requestInterceptor: (config) => {
+    requestInterceptor: (config: AxiosRequestConfig<any>) => {
       // 携带token的拦截
       const token = localCache.getCache('token')
       if (token) {
@@ -18,13 +19,13 @@ const anRequest = new ANRequest({
       }
       return config
     },
-    requestInterceptorCatch: (err) => {
+    requestInterceptorCatch: (err: any) => {
       return err
     },
-    responseInterceptor: (res) => {
+    responseInterceptor: (res: any) => {
       return res
     },
-    responseInterceptorCatch: (err) => {
+    responseInterceptorCatch: (err: any) => {
       return err
     }
   }
